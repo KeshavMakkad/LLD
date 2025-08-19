@@ -1,8 +1,5 @@
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-
+import java.util.*;
 class DataReader {
     private String fileName;
 
@@ -13,7 +10,6 @@ class DataReader {
     public List<Book> readCSV(){
         List<Book> books = new ArrayList<>();
         try (Scanner scanner = new Scanner(new File(fileName))) {
-            // Skip header line
             if (scanner.hasNextLine()) {
                 scanner.nextLine();
             }
@@ -34,7 +30,6 @@ class DataReader {
     
     private Book parseLineToBook(String line) {
         try {
-            // Handle CSV parsing with quotes
             String[] parts = parseCSVLine(line);
             
             if (parts.length != 7) {

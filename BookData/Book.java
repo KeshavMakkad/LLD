@@ -1,15 +1,27 @@
+import java.util.*;
+
 class Book {
     private String name;
-    private String author;
+    private Author author;
     private String genre;
     private double rating;
     private int reviews;
     private double price;
     private int year;
 
-    public Book(String name, String author, String genre, double rating, int reviews, double price, int year) {
+    public Book(String name, Author author, String genre, double rating, int reviews, double price, int year) {
         this.name = name;
         this.author = author;
+        this.genre = genre;
+        this.rating = rating;
+        this.reviews = reviews;
+        this.price = price;
+        this.year = year;
+    }
+    
+    public Book(String name, String authorName, String genre, double rating, int reviews, double price, int year) {
+        this.name = name;
+        this.author = new Author(authorName);
         this.genre = genre;
         this.rating = rating;
         this.reviews = reviews;
@@ -21,8 +33,12 @@ class Book {
         return name;
     }
 
-    public String getAuthor() {
+    public Author getAuthor() {
         return author;
+    }
+    
+    public String getAuthorName() {
+        return author.getName();
     }
 
     public String getGenre() {
@@ -49,8 +65,12 @@ class Book {
         this.name = name;
     }
 
-    public void setAuthor(String author) {
+    public void setAuthor(Author author) {
         this.author = author;
+    }
+    
+    public void setAuthor(String authorName) {
+        this.author = new Author(authorName);
     }
 
     public void setGenre(String genre) {
@@ -75,6 +95,16 @@ class Book {
 
     public void printDetails() {
         System.out.printf("Name: %s\nAuthor: %s\nRating: %.1f\nReviews: %d\nPrice: $%.2f\nYear: %d\nGenre: %s\n\n",
-                name, author, rating, reviews, price, year, genre);
+                name, author.getName(), rating, reviews, price, year, genre);
+    }
+    
+    public static List<Book> getBooksByRating(double rating, List<Book> books) {
+        List<Book> matchingBooks = new ArrayList<>();
+        for (Book book : books) {
+            if (Math.abs(book.getRating() - rating) < 0.01) {
+                matchingBooks.add(book);
+            }
+        }
+        return matchingBooks;
     }
 }
